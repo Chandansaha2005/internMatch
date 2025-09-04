@@ -76,6 +76,10 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
+        .dark .input-field:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             transition: all 0.3s ease;
@@ -89,6 +93,15 @@
 
         .btn-secondary {
             transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+        }
+
+        .dark .btn-secondary {
+            border-color: #4b5563;
+            background: #374151;
+            color: #e5e7eb;
         }
 
         .btn-secondary:hover {
@@ -116,6 +129,12 @@
             border-color: #2563eb;
         }
 
+        .dark .skill-chip {
+            background: #374151;
+            color: #e5e7eb;
+            border-color: #4b5563;
+        }
+
         .dark .skill-chip.selected {
             background: #2563eb;
             color: white;
@@ -138,9 +157,17 @@
             background-color: rgba(37, 99, 235, 0.05);
         }
 
+        .dark .file-upload-area:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
         .file-upload-area.dragover {
             border-color: #2563eb;
             background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .dark .file-upload-area.dragover {
+            background-color: rgba(37, 99, 235, 0.2);
         }
 
         .confetti {
@@ -185,6 +212,28 @@
                 transform: scale(1);
                 opacity: 1;
             }
+        }
+
+        /* Fix for radio buttons in dark mode */
+        .dark input[type="radio"] {
+            background-color: #1f2937;
+            border-color: #4b5563;
+        }
+
+        .dark input[type="radio"]:checked {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        /* Fix for select dropdown in dark mode */
+        .dark select {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+
+        .dark select option {
+            background-color: #1f2937;
+            color: #f3f4f6;
         }
     </style>
 </head>
@@ -417,8 +466,7 @@
                 </form>
 
                 <div class="flex justify-between mt-8">
-                    <button onclick="prevStep()"
-                        class="btn-secondary px-8 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <button onclick="prevStep()" class="btn-secondary px-8 py-3 rounded-lg font-semibold">
                         Back
                     </button>
                     <button onclick="nextStep()" class="btn-primary px-8 py-3 text-white font-semibold rounded-lg">
@@ -440,26 +488,26 @@
                     <div>
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Technical Skills</h3>
                         <div class="flex flex-wrap gap-2" id="technical-skills">
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-skill="javascript">JavaScript</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-skill="python">Python</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="java">Java</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="c++">C++</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="html">HTML</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="css">CSS</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="java">
+                                Java</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="c++">
+                                C++</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="html">
+                                HTML</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="css">
+                                CSS</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-skill="react">React</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-skill="nodejs">Node.js</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="sql">SQL</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                                data-skill="git">Git</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="sql">
+                                SQL</div>
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium" data-skill="git">
+                                Git</div>
                         </div>
                     </div>
 
@@ -467,29 +515,28 @@
                     <div>
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Interests</h3>
                         <div class="flex flex-wrap gap-2" id="interests">
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="ai">Artificial Intelligence</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="web-dev">Web Development</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="data-science">Data Science</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="mobile-dev">Mobile Development</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="cybersecurity">Cybersecurity</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="marketing">Digital Marketing</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="design">UI/UX Design</div>
-                            <div class="skill-chip px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            <div class="skill-chip px-4 py-2 border rounded-full text-sm font-medium"
                                 data-interest="blockchain">Blockchain</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex justify-between mt-8">
-                    <button onclick="prevStep()"
-                        class="btn-secondary px-8 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <button onclick="prevStep()" class="btn-secondary px-8 py-3 rounded-lg font-semibold">
                         Back
                     </button>
                     <button onclick="nextStep()" class="btn-primary px-8 py-3 text-white font-semibold rounded-lg">
@@ -578,8 +625,7 @@
                 </form>
 
                 <div class="flex justify-between mt-8">
-                    <button onclick="prevStep()"
-                        class="btn-secondary px-8 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <button onclick="prevStep()" class="btn-secondary px-8 py-3 rounded-lg font-semibold">
                         Back
                     </button>
                     <button onclick="finishSetup()" class="btn-primary px-8 py-3 text-white font-semibold rounded-lg">
@@ -621,6 +667,7 @@
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
 
+        // Check for saved theme preference or default to light mode
         const currentTheme = localStorage.getItem('theme') || 'light';
         html.classList.toggle('dark', currentTheme === 'dark');
 
@@ -629,6 +676,36 @@
             const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
             localStorage.setItem('theme', newTheme);
         });
+
+        // Get user data from login page
+        function getUserDataFromLogin() {
+            try {
+                // Try to get data from localStorage (set in login.html)
+                const userData = localStorage.getItem('userData');
+                if (userData) {
+                    const parsedData = JSON.parse(userData);
+
+                    // Pre-fill the form with user data
+                    if (parsedData.name) {
+                        document.getElementById('full-name').value = parsedData.name;
+                    }
+
+                    if (parsedData.email) {
+                        document.getElementById('email').value = parsedData.email;
+                    }
+
+                    console.log('User data loaded from login:', parsedData);
+                } else {
+                    console.log('No user data found in localStorage');
+
+                    // For demo purposes, let's add some sample data
+                    document.getElementById('full-name').value = 'John Doe';
+                    document.getElementById('email').value = 'john.doe@example.com';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
 
         // File Upload Functionality
         const fileUploadArea = document.querySelector('.file-upload-area');
