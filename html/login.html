@@ -418,7 +418,7 @@
                 <p class="text-gray-600 dark:text-gray-400">Log in to continue your internship journey</p>
             </div>
 
-            <form class="space-y-4">
+            <form class="space-y-4" action="profile_creation.html" method="GET">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
                     <input type="email"
@@ -456,7 +456,7 @@
                 <p class="text-gray-600 dark:text-gray-400">Join InternMatch and unlock your opportunities</p>
             </div>
 
-            <form class="space-y-4">
+            <form class="space-y-4" action="profile_creation.html" method="GET">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
                     <input type="text"
@@ -551,116 +551,139 @@
         </p>
     </div>
 
-    <script>
-        // Theme Toggle Functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
+   <script>
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
 
-        // Check for saved theme preference or default to light mode
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        html.classList.toggle('dark', currentTheme === 'dark');
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    html.classList.toggle('dark', currentTheme === 'dark');
 
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
-            localStorage.setItem('theme', newTheme);
-        });
+    themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+    });
 
-        // Tab Switching Functionality
-        const loginTab = document.getElementById('login-tab');
-        const signupTab = document.getElementById('signup-tab');
-        const loginForm = document.getElementById('login-form');
-        const signupForm = document.getElementById('signup-form');
+    // Tab Switching Functionality
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
 
-        function switchToLogin() {
-            // Update tab states
-            loginTab.classList.add('active');
-            loginTab.classList.remove('text-gray-600', 'dark:text-gray-400');
-            signupTab.classList.remove('active');
-            signupTab.classList.add('text-gray-600', 'dark:text-gray-400');
+    function switchToLogin() {
+        // Update tab states
+        loginTab.classList.add('active');
+        loginTab.classList.remove('text-gray-600', 'dark:text-gray-400');
+        signupTab.classList.remove('active');
+        signupTab.classList.add('text-gray-600', 'dark:text-gray-400');
 
-            // Animate form transition
-            signupForm.classList.add('form-slide-exit');
+        // Animate form transition
+        signupForm.classList.add('form-slide-exit');
+        setTimeout(() => {
+            signupForm.classList.add('hidden');
+            signupForm.classList.remove('form-slide-exit');
+            loginForm.classList.remove('hidden');
+            loginForm.classList.add('form-slide-enter');
             setTimeout(() => {
-                signupForm.classList.add('hidden');
-                signupForm.classList.remove('form-slide-exit');
-                loginForm.classList.remove('hidden');
-                loginForm.classList.add('form-slide-enter');
-                setTimeout(() => {
-                    loginForm.classList.remove('form-slide-enter');
-                }, 50);
-            }, 200);
-        }
+                loginForm.classList.remove('form-slide-enter');
+            }, 50);
+        }, 200);
+    }
 
-        function switchToSignup() {
-            // Update tab states
-            signupTab.classList.add('active');
-            signupTab.classList.remove('text-gray-600', 'dark:text-gray-400');
-            loginTab.classList.remove('active');
-            loginTab.classList.add('text-gray-600', 'dark:text-gray-400');
+    function switchToSignup() {
+        // Update tab states
+        signupTab.classList.add('active');
+        signupTab.classList.remove('text-gray-600', 'dark:text-gray-400');
+        loginTab.classList.remove('active');
+        loginTab.classList.add('text-gray-600', 'dark:text-gray-400');
 
-            // Animate form transition
-            loginForm.classList.add('form-slide-exit');
+        // Animate form transition
+        loginForm.classList.add('form-slide-exit');
+        setTimeout(() => {
+            loginForm.classList.add('hidden');
+            loginForm.classList.remove('form-slide-exit');
+            signupForm.classList.remove('hidden');
+            signupForm.classList.add('form-slide-enter');
             setTimeout(() => {
-                loginForm.classList.add('hidden');
-                loginForm.classList.remove('form-slide-exit');
-                signupForm.classList.remove('hidden');
-                signupForm.classList.add('form-slide-enter');
-                setTimeout(() => {
-                    signupForm.classList.remove('form-slide-enter');
-                }, 50);
-            }, 200);
-        }
+                signupForm.classList.remove('form-slide-enter');
+            }, 50);
+        }, 200);
+    }
 
-        loginTab.addEventListener('click', switchToLogin);
-        signupTab.addEventListener('click', switchToSignup);
+    loginTab.addEventListener('click', switchToLogin);
+    signupTab.addEventListener('click', switchToSignup);
 
-        // Form Submission Handlers (Demo)
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const isLogin = this.closest('#login-form') !== null;
-                const action = isLogin ? 'login' : 'signup';
-                alert(`This is a demo ${action} form. In a real application, this would authenticate the user!`);
-            });
-        });
-
-        // Social Login Handlers (Demo)
-        document.querySelectorAll('.btn-social').forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const provider = this.textContent.trim();
-                alert(`This is a demo ${provider} login. In a real application, this would authenticate with ${provider}!`);
-            });
-        });
-
-        // Input Focus Effects
-        document.querySelectorAll('.input-field').forEach(input => {
-            input.addEventListener('focus', function () {
-                this.parentElement.classList.add('focused');
-            });
-
-            input.addEventListener('blur', function () {
-                this.parentElement.classList.remove('focused');
-            });
-        });
-
-        // Password Strength Indicator (for signup)
-        const passwordInputs = document.querySelectorAll('input[type="password"]');
-        passwordInputs.forEach(input => {
-            input.addEventListener('input', function () {
-                // Simple password strength check for demo
-                const strength = this.value.length;
-                if (strength > 0 && strength < 6) {
-                    this.style.borderColor = '#ef4444';
-                } else if (strength >= 6 && strength < 10) {
-                    this.style.borderColor = '#f59e0b';
-                } else if (strength >= 10) {
-                    this.style.borderColor = '#10b981';
+    // Form Submission Handlers - Redirect to profile_creation.html
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const isLogin = this.closest('#login-form') !== null;
+            
+            // Basic validation
+            let isValid = true;
+            this.querySelectorAll('input[required]').forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = '#ef4444';
                 }
             });
+            
+            if (isValid) {
+                // Store user data for signup (optional)
+                if (!isLogin) {
+                    const userData = {
+                        name: this.querySelector('input[type="text"]').value,
+                        email: this.querySelector('input[type="email"]').value
+                    };
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                }
+                
+                // Redirect to profile creation page
+                window.location.href = 'profile_creation.html';
+            } else {
+                alert('Please fill in all required fields.');
+            }
         });
-    </script>
+    });
+
+    // Social Login Handlers - Redirect to profile_creation.html
+    document.querySelectorAll('.btn-social').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            // In a real application, complete OAuth flow first
+            window.location.href = 'profile_creation.html';
+        });
+    });
+
+    // Input Focus Effects
+    document.querySelectorAll('.input-field').forEach(input => {
+        input.addEventListener('focus', function () {
+            this.parentElement.classList.add('focused');
+        });
+
+        input.addEventListener('blur', function () {
+            this.parentElement.classList.remove('focused');
+        });
+    });
+
+    // Password Strength Indicator (for signup)
+    const passwordInputs = document.querySelectorAll('input[type="password"]');
+    passwordInputs.forEach(input => {
+        input.addEventListener('input', function () {
+            // Simple password strength check for demo
+            const strength = this.value.length;
+            if (strength > 0 && strength < 6) {
+                this.style.borderColor = '#ef4444';
+            } else if (strength >= 6 && strength < 10) {
+                this.style.borderColor = '#f59e0b';
+            } else if (strength >= 10) {
+                this.style.borderColor = '#10b981';
+            }
+        });
+    });
+</script>
     <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'979ad0fe7506dc97',t:'MTc1Njk2MDkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
 </body>
 
