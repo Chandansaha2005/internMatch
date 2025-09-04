@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternMatch - Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+        }
+
+        .auth-card {
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .dark .auth-card {
+            background: #1f2937;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-slide-enter {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .form-slide-exit {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: #2563eb;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2563eb, #facc15);
+            border-radius: 1px;
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-social {
+            transition: all 0.3s ease;
+        }
+
+        .btn-social:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .btn-social:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .gradient-accent {
+            background: linear-gradient(45deg, #2563eb, #facc15);
+            opacity: 0.1;
+        }
+
+        .checkbox-custom {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.25rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-custom:checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6 10.293l7.146-7.147a.5.5 0 0 1 .708.708z'/%3e%3c/svg%3e");
+        }
+
+        .dark .checkbox-custom {
+            background: #374151;
+            border-color: #6b7280;
+        }
+
+        .dark .checkbox-custom:checked {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.4s ease-out',
+                        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
+                            '100%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.6)' }
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.5);
+        }
+
+        /* Enhanced gradient backgrounds */
+        .bg-gradient-light {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
+        }
+        
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%);
+        }
+
+        /* Animated background */
+        .animated-bg {
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glass morphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Enhanced input styles */
+        .input-enhanced {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .input-enhanced:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .dark .input-enhanced:focus {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Button enhancements */
+        .btn-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-gradient:hover::before {
+            left: 100%;
+        }
+
+        /* Tab indicator */
+        .tab-indicator {
+            position: absolute;
+            bottom: -2px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating:nth-child(2) {
+            animation-delay: 2s;
+        }
+        
+        .floating:nth-child(3) {
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(-10px) rotate(-3deg); }
+        }
+
+        /* Custom checkbox */
+        .checkbox-modern {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.375rem;
+            background: white;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .checkbox-modern:checked {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+        
+        .checkbox-modern:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .dark .checkbox-modern {
+            background: #374151;
+            border-color: #6b7280;
+        }
+        
+        .dark .checkbox-modern:checked {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: #3b82f6;
+        }
+
+        /* Social button hover effects */
+        .social-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .social-btn:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
+    <!-- Background Accent -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="gradient-accent absolute -top-40 -right-40 w-80 h-80 rounded-full"></div>
+        <div class="gradient-accent absolute -bottom-40 -left-40 w-80 h-80 rounded-full"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle"
+        class="theme-toggle fixed top-6 right-6 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 z-50">
+        <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                clip-rule="evenodd"></path>
+        </svg>
+        <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+    </button>
+
+    <!-- Authentication Card -->
+    <div class="auth-card w-full max-w-md rounded-2xl p-8 relative z-10">
+        <!-- Logo -->
+        <div class="flex items-center justify-center space-x-2 mb-8">
+            <div
+                class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">InternMatch</span>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex mb-8 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+            <button id="login-tab"
+                class="tab-button flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors active">
+                Login
+            </button>
+            <button id="signup-tab"
+                class="tab-button flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors text-gray-600 dark:text-gray-400">
+                Sign Up
+            </button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-transition">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h2>
+                <p class="text-gray-600 dark:text-gray-400">Log in to continue your internship journey</p>
+            </div>
+
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="your.email@example.com" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                    <input type="password"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="Enter your password" required>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" class="checkbox-custom">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    </label>
+                    <a href="#"
+                        class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">Forgot
+                        password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-3 text-white font-semibold rounded-lg">
+                    Log In
+                </button>
+            </form>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup-form" class="form-transition hidden">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create Your Account</h2>
+                <p class="text-gray-600 dark:text-gray-400">Join InternMatch and unlock your opportunities</p>
+            </div>
+
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
+                    <input type="text"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="John Doe" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="your.email@example.com" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                    <input type="password"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="Create a strong password" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm
+                        Password</label>
+                    <input type="password"
+                        class="input-field w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        placeholder="Confirm your password" required>
+                </div>
+
+                <div class="flex items-start space-x-2">
+                    <input type="checkbox" class="checkbox-custom mt-1" required>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                        I agree to the <a href="#"
+                            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">Terms
+                            of Service</a> and <a href="#"
+                            class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">Privacy
+                            Policy</a>
+                    </span>
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-3 text-white font-semibold rounded-lg">
+                    Create Account
+                </button>
+            </form>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-6">
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">or continue
+                        with</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Login -->
+        <div class="grid grid-cols-2 gap-3">
+            <button
+                class="btn-social flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                    <path fill="currentColor"
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                    <path fill="currentColor"
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                    <path fill="currentColor"
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+                <span class="text-sm font-medium">Google</span>
+            </button>
+
+            <button
+                class="btn-social flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                <span class="text-sm font-medium">LinkedIn</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="fixed bottom-6 left-0 right-0 text-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            © 2025 InternMatch by CKS & Team. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', currentTheme === 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Tab Switching Functionality
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+
+        function switchToLogin() {
+            // Update tab states
+            loginTab.classList.add('active');
+            loginTab.classList.remove('text-gray-600', 'dark:text-gray-400');
+            signupTab.classList.remove('active');
+            signupTab.classList.add('text-gray-600', 'dark:text-gray-400');
+
+            // Animate form transition
+            signupForm.classList.add('form-slide-exit');
+            setTimeout(() => {
+                signupForm.classList.add('hidden');
+                signupForm.classList.remove('form-slide-exit');
+                loginForm.classList.remove('hidden');
+                loginForm.classList.add('form-slide-enter');
+                setTimeout(() => {
+                    loginForm.classList.remove('form-slide-enter');
+                }, 50);
+            }, 200);
+        }
+
+        function switchToSignup() {
+            // Update tab states
+            signupTab.classList.add('active');
+            signupTab.classList.remove('text-gray-600', 'dark:text-gray-400');
+            loginTab.classList.remove('active');
+            loginTab.classList.add('text-gray-600', 'dark:text-gray-400');
+
+            // Animate form transition
+            loginForm.classList.add('form-slide-exit');
+            setTimeout(() => {
+                loginForm.classList.add('hidden');
+                loginForm.classList.remove('form-slide-exit');
+                signupForm.classList.remove('hidden');
+                signupForm.classList.add('form-slide-enter');
+                setTimeout(() => {
+                    signupForm.classList.remove('form-slide-enter');
+                }, 50);
+            }, 200);
+        }
+
+        loginTab.addEventListener('click', switchToLogin);
+        signupTab.addEventListener('click', switchToSignup);
+
+        // Form Submission Handlers (Demo)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const isLogin = this.closest('#login-form') !== null;
+                const action = isLogin ? 'login' : 'signup';
+                alert(`This is a demo ${action} form. In a real application, this would authenticate the user!`);
+            });
+        });
+
+        // Social Login Handlers (Demo)
+        document.querySelectorAll('.btn-social').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const provider = this.textContent.trim();
+                alert(`This is a demo ${provider} login. In a real application, this would authenticate with ${provider}!`);
+            });
+        });
+
+        // Input Focus Effects
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+
+        // Password Strength Indicator (for signup)
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
+        passwordInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                // Simple password strength check for demo
+                const strength = this.value.length;
+                if (strength > 0 && strength < 6) {
+                    this.style.borderColor = '#ef4444';
+                } else if (strength >= 6 && strength < 10) {
+                    this.style.borderColor = '#f59e0b';
+                } else if (strength >= 10) {
+                    this.style.borderColor = '#10b981';
+                }
+            });
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'979ad0fe7506dc97',t:'MTc1Njk2MDkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
