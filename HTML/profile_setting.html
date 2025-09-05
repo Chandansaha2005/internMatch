@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternMatch - Settings & More</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a3e 100%);
+        }
+
+        .app-card {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .dark .app-card {
+            background: #2a2a3e;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .app-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #01344f 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .nav-item:hover:not(.active) {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+        }
+
+        .dark .nav-item:hover:not(.active) {
+            background: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #01344f 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-accent {
+            background: #d12128;
+            transition: all 0.3s ease;
+        }
+
+        .btn-accent:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(209, 33, 40, 0.3);
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .dark .input-field {
+            border-color: #4b5563;
+            background: #374151;
+            color: #f3f4f6;
+        }
+
+        .input-field:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #2563eb;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .dark .toggle-slider {
+            background-color: #4b5563;
+        }
+
+        .dark input:checked+.toggle-slider {
+            background-color: #2563eb;
+        }
+
+        .language-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .language-card:hover {
+            transform: translateY(-2px);
+            border-color: #2563eb;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
+        }
+
+        .language-card.selected {
+            border-color: #2563eb;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .dark .language-card.selected {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+        }
+
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-content.open {
+            max-height: 200px;
+        }
+
+        .tutorial-step {
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+
+        .tutorial-step.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .page-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-slide-enter {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .page-slide-exit {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            opacity: 1;
+            animation: tooltip-appear 0.2s ease;
+        }
+
+        .dark .tooltip:hover::after {
+            background: #374151;
+        }
+
+        @keyframes tooltip-appear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .section-icon {
+            background: linear-gradient(135deg, #fae3ac 0%, #f59e0b 100%);
+            transition: all 0.3s ease;
+        }
+
+        .section-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+
+<body class="gradient-bg min-h-screen transition-colors duration-300">
+    <!-- Top Navigation -->
+    <nav
+        class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">InternMatch</span>
+                </div>
+
+                <!-- Right Side -->
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle"
+                        class="theme-toggle p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- User Avatar -->
+                    <div class="relative">
+                        <button id="user-menu-button"
+                            class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-semibold">CK</span>
+                            </div>
+                            <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="user-menu"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                            <div class="py-2">
+                                <a href="#" onclick="showPage('settings')"
+                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Profile
+                                    Settings</a>
+                                <a href="#" onclick="showPage('language')"
+                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Language</a>
+                                <a href="#" onclick="showPage('help')"
+                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Help
+                                    & Support</a>
+                                <hr class="my-2 border-gray-200 dark:border-gray-600">
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Sign
+                                    Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Desktop Sidebar -->
+        <aside
+            class="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:pt-16 lg:bg-white/50 lg:dark:bg-gray-900/50 lg:backdrop-blur-md lg:border-r lg:border-gray-200 lg:dark:border-gray-700">
+            <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+                <nav class="mt-5 flex-1 px-2 space-y-1">
+                    <a href="#" onclick="showPage('settings')"
+                        class="nav-item active group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <svg class="mr-3 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Profile Settings
+                    </a>
+
+                    <a href="#" onclick="showPage('language')"
+                        class="nav-item group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300">
+                        <svg class="mr-3 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                            </path>
+                        </svg>
+                        Language
+                    </a>
+
+                    <a href="#" onclick="showPage('help')"
+                        class="nav-item group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300">
+                        <svg class="mr-3 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        Help & Support
+                    </a>
+
+                    <hr class="my-4 border-gray-200 dark:border-gray-600">
+
+                    <a href="#"
+                        class="nav-item group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300">
+                        <svg class="mr-3 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"></path>
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:pl-64">
+            <!-- Profile Settings Page -->
+            <div id="settings-page" class="page-transition p-4 sm:p-6 lg:p-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Profile Settings ⚙️</h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Manage your account and preferences</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Personal Information -->
+                    <div class="app-card rounded-xl p-6">
+                        <div class="flex items-center mb-6">
+                            <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Update your basic details</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full
+                                    Name</label>
+                                <input type="text" value="Chandra Kumar Singh"
+                                    class="input-field w-full px-4 py-3 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email
+                                    Address</label>
+                                <input type="email" value="chandra.singh@email.com"
+                                    class="input-field w-full px-4 py-3 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone
+                                    Number</label>
+                                <input type="tel" value="+91 98765 43210"
+                                    class="input-field w-full px-4 py-3 rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education & Skills -->
+                    <div class="app-card rounded-xl p-6">
+                        <div class="flex items-center mb-6">
+                            <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Education & Skills</h2>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Your academic background</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <h3 class="font-semibold text-gray-900 dark:text-white">B.Tech Computer Science</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">IIT Delhi • 2021-2025</p>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span
+                                        class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full">Python</span>
+                                    <span
+                                        class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full">JavaScript</span>
+                                    <span
+                                        class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full">React</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary w-full py-3 text-white font-semibold rounded-lg">
+                                Edit Education & Skills
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="app-card rounded-xl p-6">
+                        <div class="flex items-center mb-6">
+                            <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Security Settings</h2>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Keep your account secure</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <button
+                                class="w-full p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors">
+                                <div class="text-center">
+                                    <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
+                                        </path>
+                                    </svg>
+                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Change Password</p>
+                                </div>
+                            </button>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Aadhaar Verification</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Link your Aadhaar for
+                                        verification</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Email Verification</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Verify your email address</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="app-card rounded-xl p-6">
+                        <div class="flex items-center mb-6">
+                            <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h8v-2H4v2zM4 11h10V9H4v2zM4 7h12V5H4v2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Notifications</h2>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Manage your alerts</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">New Internship Alerts</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Get notified about new
+                                        opportunities</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Application Updates</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Status changes on your
+                                        applications</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Weekly Digest</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Summary of your activity</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Changes Button -->
+                <div class="mt-8 flex justify-center">
+                    <button class="btn-accent px-8 py-4 text-white font-bold rounded-lg text-lg"
+                        onclick="saveSettings()">
+                        Save All Changes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Language Selection Page -->
+            <div id="language-page" class="page-transition hidden p-4 sm:p-6 lg:p-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Choose Your Language 🌐</h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Select your preferred language for the platform
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="language-card app-card rounded-xl p-6 text-center selected" data-lang="english">
+                        <div class="text-4xl mb-3">🌍</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">English</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Default</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="hindi"
+                        data-tooltip="हिंदी (Hindi)">
+                        <div class="text-4xl mb-3">🇮🇳</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">हिंदी</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Hindi</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="bengali"
+                        data-tooltip="বাংলা (Bengali)">
+                        <div class="text-4xl mb-3">🏞️</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">বাংলা</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Bengali</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="tamil"
+                        data-tooltip="தமிழ் (Tamil)">
+                        <div class="text-4xl mb-3">🎶</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">தமிழ்</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Tamil</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="telugu"
+                        data-tooltip="తెలుగు (Telugu)">
+                        <div class="text-4xl mb-3">🌸</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">తెలుగు</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Telugu</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="marathi"
+                        data-tooltip="मराठी (Marathi)">
+                        <div class="text-4xl mb-3">🌅</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">मराठी</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Marathi</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="gujarati"
+                        data-tooltip="ગુજરાતી (Gujarati)">
+                        <div class="text-4xl mb-3">🪔</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">ગુજરાતી</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Gujarati</p>
+                    </div>
+
+                    <div class="language-card app-card rounded-xl p-6 text-center tooltip" data-lang="punjabi"
+                        data-tooltip="ਪੰਜਾਬੀ (Punjabi)">
+                        <div class="text-4xl mb-3">🌾</div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">ਪੰਜਾਬੀ</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Punjabi</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button class="btn-primary px-8 py-4 text-white font-bold rounded-lg text-lg"
+                        onclick="applyLanguage()">
+                        Apply Language Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Help & Tutorial Page -->
+            <div id="help-page" class="page-transition hidden p-4 sm:p-6 lg:p-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Need Help? 📖</h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Get started with InternMatch or find answers to
+                        your questions</p>
+                </div>
+
+                <!-- Quick Tutorial -->
+                <div class="app-card rounded-xl p-6 mb-8">
+                    <div class="flex items-center mb-6">
+                        <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-2xl">💡</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Quick Tutorial</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Learn how to use InternMatch in 3 simple
+                                steps</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-container mb-6">
+                        <div class="carousel-track" id="tutorial-track">
+                            <div class="carousel-slide tutorial-step active">
+                                <div class="text-center p-8">
+                                    <div
+                                        class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Step 1: Create Your
+                                        Profile</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">Add your education, skills, and
+                                        preferences to get personalized recommendations</p>
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide tutorial-step">
+                                <div class="text-center p-8">
+                                    <div
+                                        class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Step 2: Get AI
+                                        Recommendations</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">Our AI analyzes your profile and
+                                        suggests the best internship matches for you</p>
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide tutorial-step">
+                                <div class="text-center p-8">
+                                    <div
+                                        class="w-20 h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Step 3: Apply
+                                        Easily</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">Apply to internships with one click and
+                                        track your application progress</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="previousTutorialStep()"
+                            class="p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="flex space-x-2 items-center">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full tutorial-dot active"></div>
+                            <div class="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full tutorial-dot"></div>
+                            <div class="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full tutorial-dot"></div>
+                        </div>
+                        <button onclick="nextTutorialStep()"
+                            class="p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FAQs -->
+                <div class="app-card rounded-xl p-6 mb-8">
+                    <div class="flex items-center mb-6">
+                        <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-2xl">❓</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Find answers to common questions</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="faq-item border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <button
+                                class="w-full p-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-medium text-gray-900 dark:text-white">How does the AI recommendation
+                                    system work?</span>
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 transform transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="faq-content px-4 pb-4">
+                                <p class="text-gray-600 dark:text-gray-400">Our AI analyzes your profile, including your
+                                    education, skills, preferences, and past applications to suggest internships that
+                                    match your interests and qualifications. The more complete your profile, the better
+                                    the recommendations.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <button
+                                class="w-full p-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-medium text-gray-900 dark:text-white">Is InternMatch free to
+                                    use?</span>
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 transform transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="faq-content px-4 pb-4">
+                                <p class="text-gray-600 dark:text-gray-400">Yes! InternMatch is completely free for
+                                    students. You can create your profile, get AI recommendations, apply to internships,
+                                    and track your applications without any cost.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <button
+                                class="w-full p-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-medium text-gray-900 dark:text-white">How can I improve my chances of
+                                    getting selected?</span>
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 transform transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="faq-content px-4 pb-4">
+                                <p class="text-gray-600 dark:text-gray-400">Complete your profile with detailed
+                                    information about your skills, projects, and experiences. Upload a well-formatted
+                                    resume, write compelling cover letters, and apply early to increase your chances.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <button
+                                class="w-full p-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700"
+                                onclick="toggleFAQ(this)">
+                                <span class="font-medium text-gray-900 dark:text-white">Can I apply to multiple
+                                    internships?</span>
+                                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 transform transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="faq-content px-4 pb-4">
+                                <p class="text-gray-600 dark:text-gray-400">Absolutely! You can apply to as many
+                                    internships as you want. We recommend applying to multiple positions to increase
+                                    your chances of success. You can track all your applications in the Applications
+                                    section.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Support -->
+                <div class="app-card rounded-xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="section-icon w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-2xl">📩</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Contact Support</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Still need help? Get in touch with our
+                                team</p>
+                        </div>
+                    </div>
+
+                    <form class="space-y-4" onsubmit="submitSupportForm(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your
+                                    Name</label>
+                                <input type="text" required class="input-field w-full px-4 py-3 rounded-lg"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email
+                                    Address</label>
+                                <input type="email" required class="input-field w-full px-4 py-3 rounded-lg"
+                                    placeholder="Enter your email">
+                            </div>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                            <textarea required rows="4" class="input-field w-full px-4 py-3 rounded-lg"
+                                placeholder="Describe your issue or question..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary px-6 py-3 text-white font-semibold rounded-lg">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav
+        class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 z-50">
+        <div class="grid grid-cols-3 h-16">
+            <button onclick="showPage('settings')"
+                class="nav-item active flex flex-col items-center justify-center space-y-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="text-xs">Settings</span>
+            </button>
+
+            <button onclick="showPage('language')"
+                class="nav-item flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                    </path>
+                </svg>
+                <span class="text-xs">Language</span>
+            </button>
+
+            <button onclick="showPage('help')"
+                class="nav-item flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                <span class="text-xs">Help</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        let currentPage = 'settings';
+        let currentTutorialStep = 0;
+        let selectedLanguage = 'english';
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', currentTheme === 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // User Menu Toggle
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+
+        userMenuButton.addEventListener('click', () => {
+            userMenu.classList.toggle('hidden');
+        });
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
+                userMenu.classList.add('hidden');
+            }
+        });
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide current page
+            const currentPageElement = document.getElementById(`${currentPage}-page`);
+            currentPageElement.classList.add('page-slide-exit');
+
+            setTimeout(() => {
+                currentPageElement.classList.add('hidden');
+                currentPageElement.classList.remove('page-slide-exit');
+
+                // Show new page
+                currentPage = pageName;
+                const newPageElement = document.getElementById(`${currentPage}-page`);
+                newPageElement.classList.remove('hidden');
+                newPageElement.classList.add('page-slide-enter');
+
+                setTimeout(() => {
+                    newPageElement.classList.remove('page-slide-enter');
+                }, 50);
+
+                updateNavigation();
+            }, 200);
+        }
+
+        function updateNavigation() {
+            // Update desktop navigation
+            document.querySelectorAll('aside .nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.classList.add('text-gray-600', 'dark:text-gray-300');
+            });
+
+            // Update mobile navigation
+            document.querySelectorAll('nav .nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.classList.add('text-gray-600', 'dark:text-gray-300');
+            });
+
+            // Activate current page navigation
+            const pageMap = {
+                'settings': 0,
+                'language': 1,
+                'help': 2
+            };
+
+            const desktopNavItems = document.querySelectorAll('aside .nav-item');
+            const mobileNavItems = document.querySelectorAll('nav .nav-item');
+
+            if (desktopNavItems[pageMap[currentPage]]) {
+                desktopNavItems[pageMap[currentPage]].classList.add('active');
+                desktopNavItems[pageMap[currentPage]].classList.remove('text-gray-600', 'dark:text-gray-300');
+            }
+
+            if (mobileNavItems[pageMap[currentPage]]) {
+                mobileNavItems[pageMap[currentPage]].classList.add('active');
+                mobileNavItems[pageMap[currentPage]].classList.remove('text-gray-600', 'dark:text-gray-300');
+            }
+        }
+
+        // Language Selection
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.language-card')) {
+                const card = e.target.closest('.language-card');
+                const lang = card.dataset.lang;
+
+                // Remove selected class from all cards
+                document.querySelectorAll('.language-card').forEach(c => c.classList.remove('selected'));
+
+                // Add selected class to clicked card
+                card.classList.add('selected');
+                selectedLanguage = lang;
+            }
+        });
+
+        function applyLanguage() {
+            localStorage.setItem('selectedLanguage', selectedLanguage);
+            alert(`Language changed to ${selectedLanguage}! This is a demo - in a real app, the interface would update to show content in your selected language.`);
+        }
+
+        // Tutorial Carousel
+        function nextTutorialStep() {
+            if (currentTutorialStep < 2) {
+                currentTutorialStep++;
+                updateTutorialCarousel();
+            }
+        }
+
+        function previousTutorialStep() {
+            if (currentTutorialStep > 0) {
+                currentTutorialStep--;
+                updateTutorialCarousel();
+            }
+        }
+
+        function updateTutorialCarousel() {
+            const track = document.getElementById('tutorial-track');
+            const steps = document.querySelectorAll('.tutorial-step');
+            const dots = document.querySelectorAll('.tutorial-dot');
+
+            // Update carousel position
+            track.style.transform = `translateX(-${currentTutorialStep * 100}%)`;
+
+            // Update step visibility
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', index === currentTutorialStep);
+            });
+
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-blue-600', index === currentTutorialStep);
+                dot.classList.toggle('bg-gray-300', index !== currentTutorialStep);
+                dot.classList.toggle('dark:bg-gray-600', index !== currentTutorialStep);
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Form Submissions
+        function saveSettings() {
+            // Simulate saving settings
+            const button = event.target;
+            const originalText = button.textContent;
+
+            button.textContent = 'Saving...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                button.textContent = 'Saved!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 1000);
+            }, 1500);
+        }
+
+        function submitSupportForm(event) {
+            event.preventDefault();
+
+            const button = event.target.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+
+            button.textContent = 'Sending...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                button.textContent = 'Message Sent!';
+                event.target.reset();
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+
+        // Auto-advance tutorial carousel
+        setInterval(() => {
+            nextTutorialStep();
+            if (currentTutorialStep === 2) {
+                setTimeout(() => {
+                    currentTutorialStep = -1;
+                    nextTutorialStep();
+                }, 3000);
+            }
+        }, 5000);
+
+        // Initialize
+        updateNavigation();
+
+        // Load saved language preference
+        const savedLanguage = localStorage.getItem('selectedLanguage');
+        if (savedLanguage) {
+            selectedLanguage = savedLanguage;
+            document.querySelectorAll('.language-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.lang === savedLanguage);
+            });
+        }
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'979c5488552584e9',t:'MTc1Njk3Njc3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
